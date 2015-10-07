@@ -76,5 +76,5 @@ Run the following two commands in separate terminal windows to test out the grid
 1. `grunt`
 2. `cd example && python -m SimpleHTTPServer`
 
-[grid-file]: build/grid.css
-[grid-system]: src/grid_system.less
+[grid-file]: build/grid-system.css
+[grid-system]: src/less/grid_system.less
