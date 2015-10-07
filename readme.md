@@ -68,7 +68,7 @@ it is doing.
 Run the following two commands in separate terminal windows to test out the grid system.
 
 1. `grunt`
-2. `cd && example && python -m SimpleHTTPServer`
+2. `cd example && python -m SimpleHTTPServer`
 
 [grid-file]: build/grid.css
 [grid-system]: src/grid_system.less
