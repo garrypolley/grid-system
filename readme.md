@@ -6,6 +6,12 @@ layouts.
 
 Browsers that support media queries should be supported.
 
+## Features
+
+* 24 column grid
+* Responsive
+* No margin or padding added
+
 ## Why a new grid system?
 
 Currently any grid system I could find made assumptions about
@@ -38,7 +44,7 @@ styling which causes many headaches later in CSS development.
 
 ## Usage
 
-Code can be found in the css `[build/grid.css][grid-file]` file.
+Code can be found in the css [build/grid.css][grid-file] file.
 
 ```html
 <html dir="ltr">
@@ -60,7 +66,7 @@ what is common for all columns and what is specific for each media query set of 
 
 ## Details
 
-Check out the source `[src/grid_system.less][grid-system]` file. It has a lot of comments on what
+Check out the source [src/grid_system.less][grid-system] file. It has a lot of comments on what
 it is doing.
 
 ## Developing/testing
