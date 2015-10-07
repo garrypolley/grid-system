@@ -1,0 +1,178 @@
+/* ------------------------------------------------------------------------- *\
+   Custom grid system for managing responsive layouts.
+
+   This system is heavily based on the breaks that twitter bootstrap version
+   3.x uses as well as this article:
+   http://www.sitepoint.com/understanding-css-grid-systems/
+
+   The system uses a "mobile" first approach. See MediaQuery section for
+   more details. This grid system _only_ supplies grids. It does not add
+   any padding or margin whatsoever. This is left to the consumer to decide
+   how to apply margin and padding. Padding can be easily added to the grid.
+   Margin cannot be added to the grid, by philosophy it is not supported.
+
+   1. ColumnGenerators ..... mixins that create the "meat" of the grid
+   2. MediaQuery       ..... generates the actual grid CSS
+   3. GridLayout       ..... classes for actually using the grid
+   4. RTLSupport       ..... supplies the float of left or right to grid
+
+\* ------------------------------------------------------------------------- */
+
+
+
+
+
+/* ------------------------------------------------------------------------- *\
+   #ColumnGenerators
+
+    There are two main mixins here.
+
+    .make-responsive-columns -- Should be used when the columns need to be
+        responsive.
+        (e.g. .make-responsive-columns('md', 24) inside a media query)
+
+    .make-static-columns -- Should be used when the columns should not share
+        a line.
+        (e.g. .make-static-columns('sm', 24) inside the smallest media query)
+
+    1. .column-full-width must be defined in the caller to .make-static-columns
+        for the styles to be applied correctly. Ideally it will be something
+        with `width: 100%`.
+
+\* ------------------------------------------------------------------------- */
+.make-responsive-columns(@screen-size, @number-columns, @column-number: 1) when (@column-number =< @number-columns) {
+    .column-@{screen-size}-@{column-number} {
+        width: (@column-number * 100% / @number-columns);
+    }
+    .make-responsive-columns(@screen-size, @number-columns, (@column-number + 1));
+}
+
+.make-static-columns(@screen-size, @number-columns, @column-number: 1) when (@column-number =< @number-columns) {
+    .column-@{screen-size}-@{column-number} {
+        &:extend(.column-full-width); // [1] using LESS comment so this does not render useless classes in the CSS.
+    }
+    .make-static-columns(@screen-size, @number-columns, (@column-number + 1));
+}
+
+
+
+
+
+/* ------------------------------------------------------------------------- *\
+   #MediaQuery
+
+    Uses the ColumnMixins to create the actual grid system. This grid system
+    is built mobile first. Meaning the "lowest" used size propagates upward.
+    For example col-sm-2 will be the size for all viewports unless a larger
+    size of something like col-lg-4 is used on an element.
+
+    0. This ensures that at a very small screen all elements go to max width
+      1. This is kind of a hack so that the styles all use the same rule.
+    1. Should be used for smallest phones and tiny screens
+    2. Should be used for larger phone sizes and tablets
+    3. Should be used for larger tablets and standard desktop
+    4. Should be used for big desktops
+
+\* ------------------------------------------------------------------------- */
+@screen-xs-min: 550px;
+@screen-sm-min: 768px;
+@screen-md-min: 992px;
+@screen-lg-min: 1200px;
+
+@max-number-columns: 24;
+
+@media only screen and (max-width: @screen-xs-min) { /* [0] */
+    .column-full-width {
+      width: 100%; /* [0.1] */
+    }
+
+    .make-static-columns(xs, @max-number-columns);
+    .make-static-columns(sm, @max-number-columns);
+    .make-static-columns(md, @max-number-columns);
+    .make-static-columns(lg, @max-number-columns);
+}
+
+@media only screen and (min-width: @screen-xs-min) { /* [1] */
+    .make-responsive-columns(xs, @max-number-columns);
+}
+
+@media only screen and (min-width: @screen-sm-min) { /* [2] */
+    .make-responsive-columns(sm, @max-number-columns);
+}
+
+@media only screen and (min-width: @screen-md-min) { /* [3] */
+    .make-responsive-columns(md, @max-number-columns);
+}
+
+@media only screen and (min-width: @screen-lg-min) { /* [4] */
+    .make-responsive-columns(lg, @max-number-columns);
+}
+
+
+
+
+
+/* ------------------------------------------------------------------------- *\
+   #GridLayout
+
+   These styles are what "hold" the grid in place. The box-sizing allows for
+   padding and margin to be contained within the given section. The content
+   added in the pseudo selectors is what "clears" out the floats; in
+   conjunction with the `clear: both` style.
+
+    1. Makes the margin and padding get computed correctly within the element
+    2. Ensures the row clears out...
+    3. ...all the floats
+    4. Allows easy positioning of elements within a column
+    5. Ensures all columns take up entire row.
+
+\* ------------------------------------------------------------------------- */
+.row,
+.column {
+    box-sizing: border-box; /* [1] */
+}
+
+.row:before,
+.row:after {
+    content: " ";
+    display: table; /* [2] */
+}
+
+.row:after {
+    clear: both; /* [3] */
+}
+
+.column {
+    position: relative; /* [4] */
+}
+
+
+
+
+
+/* ------------------------------------------------------------------------- *\
+    #RTLSupport
+
+    Right to left and left to right support is gained by using the "dir"
+    attribute on the HTML. These selectors modify the responsive columns
+    defined above in the GridLayout section.
+
+    The way this is written the "column" class name becomes a reserved class
+    name to use.
+
+    Note: If a consumer wants to add margin and padding they will need to add
+    the padding direction to the elements. It should be padding-left for float
+    left, and padding-right for float right.
+
+\* ------------------------------------------------------------------------- */
+[dir="rtl"] {
+    .column {
+        float: right;
+    }
+}
+
+[dir="ltr"] {
+    .column {
+        float: left;
+    }
+}

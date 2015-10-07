@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Grid System</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/grid-system.css">
+        <style>
+        body {
+            background-color: blue;
+            text-align: center;
+        }
+        .red {
+            background-color: red;
+        }
+        .green {
+            background-color: green;
+        }
+        .black {
+            background-color: black;
+        }
+        .white {
+            background-color: white;
+        }
+        div {
+            min-height: 30px;
+        }
+        .row {
+            background-color: gray;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="row">
+            <div class="column column-xs-12 column-md-16 column-lg-20 red">
+                <pre>.column-xs-12
+                .column-md-16
+                .column-lg-20
+                </pre>
+            </div>
+            <div class="column column-xs-12 column-md-8 column-lg-4 green">
+                <pre>.column-xs-12
+                .column-md-8
+                .column-lg-4
+                </pre>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column column-xs-20 column-md-9 column-lg-17 green">c</div>
+            <div class="column column-xs-4 column-md-15 column-lg-7 red">d</div>
+        </div>
+
+        <div class="row">
+            <div class="column column-xs-12 column-md-16 column-lg-20 black">
+                <div class="column column-xs-12 column-md-16 column-lg-20 green">e</div>
+                <div class="column column-xs-12 column-md-8 column-lg-4 red">f</div>
+            </div>
+            <div class="column column-xs-12 column-md-8 column-lg-4 white">g</div>
+        </div>
+
+        <div class="row">
+            <div class="column column-xs-12 column-md-16 column-lg-20 black">
+                <div class="row">
+                    <div class="column column-xs-12 column-md-16 column-lg-20 green">h</div>
+                    <div class="column column-xs-12 column-md-8 column-lg-4 red">i</div>
+                </div>
+                <div class="row">
+                    <div class="column column-xs-12 column-md-16 column-lg-20 green">j</div>
+                    <div class="column column-xs-12 column-md-8 column-lg-4 red">k</div>
+                </div>
+            </div>
+            <div class="column column-xs-12 column-md-8 column-lg-4 white">
+                <div class="column column-xs-12 column-md-16 column-lg-14 black">
+                    <div class="column column-xs-12 column-md-16 column-lg-20 green">l
+                        <pre>.column-xs-12
+                            .column-md-16
+                            .column-lg-20
+                        </pre>
+                    </div>
+                    <div class="column column-xs-12 column-md-8 column-lg-4 red">m</div>
+                </div>
+                <div class="column column-xs-12 column-md-8 column-lg-10 white">n</div>
+            </div>
+        </div>
+    </body>
+</html>
